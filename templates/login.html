@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+                document.querySelector('#submit').disabled=true;
+
+                document.querySelector('#name').onkeyup = () => {
+                    if (document.querySelector('#name').value.length>0)
+                        document.querySelector('#submit').disabled=false;
+                    else
+                        document.querySelector('#submit').disabled=true;
+                };
+
+    
+                document.querySelector('#formDisplayName').onsubmit = () => {
+
+                    const request = new XMLHttpRequest();
+                    const name = document.querySelector('#name').value;
+                    
+                    request.open('POST','/login');
+
+                    request.onload = ()=>{
+                        window.location.href="/"
+                    };
+
+                    const data = new FormData();
+                    data.append('name', name);
+                    request.send(data);
+                    return false;
+                };
+            });
+        </script>
+        <title>Flack</title>
+    </head>
+    <body>
+        <h1>{{h1_message}}</h1>
+        <form id="formDisplayName">
+            <input id="name" autocomplete="off" autofocus placeholder="Display name" type="text">
+            <input id="submit" type="submit" value="Login" href="url_for('index')">
+        </form>
+    </body>
+</html>

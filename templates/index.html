@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+        <script id="channel-button" type="text/template">
+            {% raw -%}
+                <li>
+                    <button id="channelButton" data-channel="{{channelName}}">{{channelName}}</button>
+                </li>
+            {%- endraw %}
+        </script>
+
+        <script id="sent_message" type="text/template">
+            {% raw -%}
+                <div class="sent-message" data-user="{{sender}}" data-time="{{time}}" data-content="{{content}}">
+                    <div class="username">You</div>
+                    <div class="content">{{content}}</div>
+                    <div class="time">{{time}}</div>
+                    <button class="deleteButton">Delete message</div>   
+                </div>
+            {%- endraw %}
+        </script>
+
+        <script id="received_message" type="text/template">
+            {% raw -%}
+                <div class="received-message" data-user="{{sender}}" data-time="{{time}}" data-content="{{content}}">
+                    <div class="username">{{sender}}</div>
+                    <div class="content">{{content}}</div>
+                    <div class="time">{{time}}</div>   
+                </div>
+            {%- endraw %}
+        </script>
+
+        <script id="deleted_message" type="text/template">
+            {% raw -%}
+                <div class="deleted-message" data-user="{{sender}}" data-time="{{time}}" data-content="">
+                    <div class="username">{{sender}}</div>
+                    <div class="content">This message was deleted</div>
+                    <div class="time">{{time}}</div>   
+                </div>
+            {%- endraw %}
+        </script>
+
+        <script type="text/javascript" src="{{url_for('static',filename='index.js')}}"></script>
+
+        <title>Flack</title>
+    </head>
+    <body>
+        <h1>Hello <span id='username'>{{displayName}}</span>!</h1>
+        <hr>
+        <div class='channels'>
+            <h3>Channels</h3>
+            <form id="formCreateChannel">
+                <input id="newChannelName" placeholder="Create channel" type="text">
+                <input id="createChannel" type="submit" value="Create">
+            </form>
+            <br>
+            <ul id="channelList">
+                List of Channels:
+                {% for channel in channels %}
+                <li>
+                    <button id="channelButton" data-channel={{channel}}>{{channel}}</button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+
+
+        <h2 id="channelName">{{channelName}}</h2>
+        <hr>
+        <div id="chat-area">
+            
+            <hr>
+        </div>
+        <hr>
+        <form id="formNewMessage">
+            <input id="newMessage" placeholder="Type a message" type="text">
+            <input id="sendMessage" type="submit" value="Send">
+        </form>
+
+
+    </body>
+</html>
